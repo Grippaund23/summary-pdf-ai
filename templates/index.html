@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Riassuntore PDF con AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Riassuntore PDF con AI</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="pdf_file" accept=".pdf" required>
+            <label for="lunghezza">Lunghezza riassunto:</label>
+            <select name="lunghezza">
+                <option value="breve">Breve</option>
+                <option value="dettagliato">Dettagliato</option>
+            </select>
+            <button type="submit">Carica e Riassumi</button>
+        </form>
+
+        {% if testo_pdf %}
+        <h2>Anteprima testo PDF:</h2>
+        <div class="testo_pdf">
+            <p>{{ testo_pdf }}</p>
+        </div>
+        {% endif %}
+
+        {% if riassunto %}
+        <h2>Riassunto:</h2>
+        <div class="riassunto">
+            <p>{{ riassunto }}</p>
+        </div>
+
+        <form method="POST" action="/download">
+            <input type="hidden" name="riassunto" value="{{ riassunto }}">
+            <button type="submit">Scarica Riassunto</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>
